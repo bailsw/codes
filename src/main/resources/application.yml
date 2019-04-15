@@ -1,0 +1,26 @@
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  servlet:
+      session:
+        cookie:
+          http-only: false
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/bookstore?serverTimezone=UTC
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: root
+      db-type: mysql
+      initialSize: 1
+      minIdle: 3
+      maxActive: 20
+  mvc:
+    view:
+      suffix: .jsp
+pagehelper:
+  helper-dialect: mysql #不同的数据库分页语句可能不一样,
+  params: count=countsql
+  reasonable: true
+  support-methods-arguments: true

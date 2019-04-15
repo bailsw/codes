@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdu.bookstore.mappers.BuyerMapper">
+    <insert id="addBuyer" parameterType="com.qdu.bookstore.buyer.pojo.Buyer">
+        INSERT into buyer(buyer_username, buyer_password, buyer_salt, buyer_phone, buyer_email, buyer_registerTime, buyer_passwordQuestion, buyer_passwordAnswer)
+        VALUES (#{buyer_username},#{buyer_password},#{buyer_salt},#{buyer_phone},#{buyer_email},#{buyer_registerTime},#{buyer_passwordQuestion},{buyer_passwordAnswer})
+    </insert>
+    <select id="selectBuyerByUsername" resultType="com.qdu.bookstore.buyer.pojo.Buyer">
+        SELECT * from buyer WHERE buyer_username=#{buyer_username}
+    </select>
+    <select id="selectBuyerByUsernameAndPassword" resultType="com.qdu.bookstore.buyer.pojo.Buyer">
+        SELECT * from buyer WHERE buyer_username=#{buyer_username} and buyer_password=#{buyer_password}
+    </select>
+    <update id="updateBuyer" parameterType="com.qdu.bookstore.buyer.pojo.Buyer">
+        UPDATE buyer SET buyer_password=#{buyer_password},buyer_phone=#{buyer_phone},
+        buyer_email=#{buyer_email},buyer_passwordQuestion=#{buyer_passwordQuestion},
+        buyer_passwordAnswer=#{buyer_passwordAnswer} where buyer_id=#{buyer_id}
+    </update>
+</mapper>
