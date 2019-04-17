@@ -33,10 +33,12 @@ import com.qdu.bookstore.buyer.pojo.Buyer;
 import com.qdu.bookstore.order.pojo.Order;
 import com.qdu.bookstore.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -49,20 +51,21 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
     @RequestMapping("getallorders")
-    public PageInfo<Order> getAllOrders(Integer pagesize, Integer pagenum, HttpSession session){
+    public PageInfo<Order> getAllOrders(Integer pagesize, Integer pagenum, HttpServletRequest request){
         pagesize=5;
         if (pagenum==null){
             pagenum=1;
         }
         PageHelper.startPage(pagenum,pagesize);
-        Buyer loggedUser = (Buyer) session.getAttribute("loggeduser");
+        Buyer loggedUser = (Buyer) request.getSession().getAttribute("loggeduser");
+
         List<Order> allOrders = orderService.getAllOrdersByUserid(loggedUser.getBuyer_Id());
         PageInfo<Order> pageInfo=new PageInfo<>(allOrders);
         return pageInfo;
     }
     @RequestMapping("getorderbyid")
-    public Order getOrderById(Integer orderid,HttpSession session){
-        Buyer loggedUser = (Buyer) session.getAttribute("loggeduser");
+    public Order getOrderById(Integer orderid, HttpServletRequest request){
+        Buyer loggedUser = (Buyer) request.getSession().getAttribute("loggeduser");
         Order order=orderService.getOrderById(orderid,loggedUser);
         if (order!=null){
             return order;

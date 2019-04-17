@@ -49,7 +49,7 @@ public class BuyerServiceImpl implements BuyerService {
     public Buyer login(String username,String password) {
 
         String buyer_password = MD5Util.MD5Encode(password,"utf-8");
-        System.out.println(buyer_password);
+        //System.out.println(buyer_password);
         Buyer buyer1 = buyerMapper.selectBuyerByUsernameAndPassword(username, buyer_password);
         return buyer1;
     }

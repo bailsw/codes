@@ -12,10 +12,23 @@
     <select id="getAllBooks" resultType="com.qdu.bookstore.book.pojo.Book">
         select book_id,booktype_name book_type,book_name,
         book_price,book_pic,book_info,book_ISBN,book_author,book_publishingHouse,book_browsedTime,
-        book_soldcount,book_stock  from book b left join booktype bt on b.book_typeid=bt.booktype_id
+        book_soldcount,book_stock from book b left join booktype bt on b.book_typeid=bt.booktype_id
         <where>
             <if test="type!=''">
                 booktype_name=#{type}
+            </if>
+        </where>
+    </select>
+    <select id="search" resultType="com.qdu.bookstore.book.pojo.Book">
+        select book_id,booktype_name book_type,book_name,
+        book_price,book_pic,book_info,book_ISBN,book_author,book_publishingHouse,book_browsedTime,
+        book_soldcount,book_stock  from book b left join booktype bt on b.book_typeid=bt.booktype_id
+        <where>
+            <if test="key!=''">
+                book_name like CONCAT('%',#{key},'%')
+            </if>
+            <if test="type!=''">
+               and booktype_name = #{type}
             </if>
         </where>
     </select>

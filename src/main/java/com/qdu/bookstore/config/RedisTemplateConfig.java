@@ -1,4 +1,4 @@
-package com.qdu.bookstore.book.service.impl;/**
+package com.qdu.bookstore.config;/**
 *                                                                      : ,       
 *                                  +7?==?O$~                           :7?,, :~=,
 *                                +Z~       +Z~,                        :I+IIO+++ 
@@ -27,47 +27,28 @@ package com.qdu.bookstore.book.service.impl;/**
 *                     哪错了？             错哪了？              我是谁？
 */
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.qdu.bookstore.mappers.BookMapper;
-import com.qdu.bookstore.book.pojo.Book;
-import com.qdu.bookstore.book.service.BookService;
-import com.qdu.bookstore.utils.ResultVOUtil;
-import com.qdu.bookstore.vo.ResultVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /** @Author ShaneLau
  * Created by Shane Lau on 2019/4/17.
  */
-@Service
-public class BookServiceImpl implements BookService {
-    @Autowired
-    private BookMapper bookMapper;
-
-    @Override
-    public ResultVO getBookById(String id) {
-        Book book=bookMapper.getBookById(id);
-        if (book!=null){
-            return ResultVOUtil.success(book);
-        }
-        return ResultVOUtil.error("fail");
+@Configuration
+public class RedisTemplateConfig {
+    @Bean
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate redisTemplate = new StringRedisTemplate(factory);
+        StringRedisSerializer stringRedisSerializer =new StringRedisSerializer();
+        redisTemplate.setValueSerializer(stringRedisSerializer);
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
+        redisTemplate.setHashValueSerializer(stringRedisSerializer);
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
     }
 
-    @Override
-    public PageInfo<Book> search(String key, String type, int pagenum) {
-        PageHelper.startPage(20,pagenum);
-        ArrayList books=bookMapper.search(key,type);
-        return new PageInfo<Book>(books);
-    }
-
-    @Override
-    public ArrayList<Book> getAllBooks(String type) {
-        if (type==null){
-            type="";
-        }
-        return bookMapper.getAllBooks(type);
-    }
 }

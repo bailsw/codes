@@ -58,11 +58,12 @@ public class BuyerController {
     //检查用户名唯一
     @RequestMapping("checkusername")
     @ResponseBody
-    public String checkUsername(String buyer_username) {
-        if (buyerService.checkUsername(buyer_username)){
-            return "fail";
-        };
-        return "ok";
+    public ResultVO checkUsername(String buyer_username) {
+        if (buyerService.checkUsername(buyer_username)) {
+            return ResultVOUtil.error(false);
+        }
+        ;
+        return ResultVOUtil.success("success");
     }
 
     // 注册
@@ -88,13 +89,13 @@ public class BuyerController {
     @RequestMapping("login")
     @ResponseBody
     public ResultVO login(@RequestParam(value = "buyer_Username") String user_Username,
-                          @RequestParam(value = "buyer_Password") String user_Password, HttpServletRequest request, HttpServletResponse response){
-
-        Buyer buyer1 = buyerService.login(user_Username,user_Password);
-        if (buyer1!=null){
+                          @RequestParam(value = "buyer_Password") String user_Password, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(request.getSession().getId());
+        Buyer buyer1 = buyerService.login(user_Username, user_Password);
+        if (buyer1 != null) {
             if (buyer1 != null) {
                 String string = UUID.randomUUID().toString();
-                request.getSession().setAttribute("buyer", buyer1);
+                request.getSession().setAttribute("loggeduser", buyer1);
                 request.getSession().setAttribute("token", string);
                 Cookie cookie = new Cookie("token", string);
                 cookie.setPath("/");
@@ -102,17 +103,20 @@ public class BuyerController {
                 response.addCookie(cookie);
                 return ResultVOUtil.success(buyer1);
             }
-        };
-        return ResultVOUtil.error(1,"登录失败");
+        }
+        ;
+        return ResultVOUtil.error(1, "登录失败");
     }
+
     @RequestMapping("changepassword")
     @ResponseBody
-    public ResultVO changeaPassword(String password,String repassword,HttpServletRequest request){
-        Buyer buyer= (Buyer)request.getSession().getAttribute("loggeduser");
-        if (password!=null&&(password.equals(repassword))&&buyer!=null){
-            buyerService.changeBuyerPassword(password,buyer);
+    public ResultVO changeaPassword(String password, String repassword, HttpServletRequest request) {
+        Buyer buyer = (Buyer) request.getSession().getAttribute("loggeduser");
+        if (password != null && (password.equals(repassword)) && buyer != null) {
+            buyerService.changeBuyerPassword(password, buyer);
             return ResultVOUtil.success("success");
         }
         return ResultVOUtil.error("fail");
     }
 }
+

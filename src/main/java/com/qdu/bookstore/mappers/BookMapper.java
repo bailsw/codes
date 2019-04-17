@@ -16,4 +16,6 @@ public interface BookMapper {
     Book getBookById(@Param(value = "id") String id);
 
     ArrayList<Book> getAllBooks(@Param(value = "type") String type);
+
+    ArrayList search(@Param(value = "key") String key, @Param(value = "type") String type);
 }

@@ -48,6 +48,7 @@ public class UserInterceptor implements HandlerInterceptor {
         response.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         String sessionToken = (String) session.getAttribute("token");
+        System.out.println(sessionToken);
         if (sessionToken == null){
             return false;
         }
