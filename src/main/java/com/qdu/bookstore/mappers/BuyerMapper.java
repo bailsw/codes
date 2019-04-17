@@ -2,6 +2,9 @@ package com.qdu.bookstore.mappers;
 
 import com.qdu.bookstore.buyer.pojo.Buyer;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import javax.annotation.security.PermitAll;
 
 /**
  * @Author ShaneLau
@@ -11,8 +14,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BuyerMapper {
     public void addBuyer(Buyer buyer);
 
-    Buyer selectBuyerByUsername(String buyer_username);
+    Buyer selectBuyerByUsername(@Param(value = "buyer_Username") String buyer_username);
 
-    Buyer selectBuyerByUsernameAndPassword(String buyer_username,String buyer_password);
+    Buyer selectBuyerByUsernameAndPassword(@Param(value = "buyer_Username") String buyer_username,
+                                           @Param(value = "buyer_Password") String buyer_password);
     int updateBuyer(Buyer buyer);
 }

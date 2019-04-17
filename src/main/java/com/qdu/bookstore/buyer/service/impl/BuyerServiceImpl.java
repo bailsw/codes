@@ -46,10 +46,11 @@ public class BuyerServiceImpl implements BuyerService {
     BuyerMapper buyerMapper;
 
     @Override
-    public Buyer login(Buyer buyer) {
-        String buyer_username = buyer.getBuyer_Username();
-        String buyer_password = MD5Util.MD5Encode(buyer.getBuyer_Password(),"MD5");
-        Buyer buyer1 = buyerMapper.selectBuyerByUsernameAndPassword(buyer_username, buyer_password);
+    public Buyer login(String username,String password) {
+
+        String buyer_password = MD5Util.MD5Encode(password,"utf-8");
+        System.out.println(buyer_password);
+        Buyer buyer1 = buyerMapper.selectBuyerByUsernameAndPassword(username, buyer_password);
         return buyer1;
     }
 

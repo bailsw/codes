@@ -1,4 +1,4 @@
-package com.qdu.bookstore.book.pojo;/**
+package com.qdu.bookstore.book.service.impl;/**
 *                                                                      : ,       
 *                                  +7?==?O$~                           :7?,, :~=,
 *                                +Z~       +Z~,                        :I+IIO+++ 
@@ -26,8 +26,39 @@ package com.qdu.bookstore.book.pojo;/**
 *                                                     :~,                 :=     
 *                     哪错了？             错哪了？              我是谁？
 */
+
+import com.qdu.bookstore.mappers.BookMapper;
+import com.qdu.bookstore.book.pojo.Book;
+import com.qdu.bookstore.book.service.BookService;
+import com.qdu.bookstore.utils.ResultVOUtil;
+import com.qdu.bookstore.vo.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+
 /** @Author ShaneLau
- * Created by Shane Lau on 2019/4/12.
+ * Created by Shane Lau on 2019/4/17.
  */
-public class Book {
+@Service
+public class BookServiceImpl implements BookService {
+    @Autowired
+    private BookMapper bookMapper;
+
+    @Override
+    public ResultVO getBookById(String id) {
+        Book book=bookMapper.getBookById(id);
+        if (book!=null){
+            return ResultVOUtil.success(book);
+        }
+        return ResultVOUtil.error("fail");
+    }
+
+    @Override
+    public ArrayList<Book> getAllBooks(String type) {
+        if (type==null){
+            type="";
+        }
+        return bookMapper.getAllBooks(type);
+    }
 }

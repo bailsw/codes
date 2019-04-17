@@ -11,7 +11,7 @@ public interface BuyerService {
 
     Boolean checkUsername(String buyer_username);
 
-    Buyer login(Buyer buyer);
+    Buyer login(String username,String password);
 
     Buyer getUserByUsername(String buyer_username);
 

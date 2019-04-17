@@ -16,7 +16,7 @@ public class ResultVOUtil {
     public static ResultVO error(Object object) {
         ResultVO resultVO = new ResultVO();
         resultVO.setData(object);
-        resultVO.setCode(1);
+        resultVO.setCode(500);
         resultVO.setMsg("失败");
         return resultVO;
     }
