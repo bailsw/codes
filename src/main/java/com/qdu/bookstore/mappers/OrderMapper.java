@@ -1,25 +1,21 @@
 package com.qdu.bookstore.mappers;
 
 import com.qdu.bookstore.order.pojo.Order;
-import com.qdu.bookstore.order.pojo.OrderExample;
-import java.util.List;
 
-import com.sun.tracing.dtrace.ModuleAttributes;
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
+
 @Mapper
+@Component(value = "orderMapper")
 public interface OrderMapper {
-    long countByExample(OrderExample example);
+   void addOrder(Order order);
 
-    int deleteByExample(OrderExample example);
+    Order getOrderById(@Param(value = "order_id") Integer orderid);
 
-    int insert(Order record);
+    ArrayList<Order> getOrdersByUser(@Param(value = "buyer_id") Integer id, @Param(value = "status") Integer status);
 
-    int insertSelective(Order record);
-
-    List<Order> selectByExample(OrderExample example);
-
-    int updateByExampleSelective(@Param("record") Order record, @Param("example") OrderExample example);
-
-    int updateByExample(@Param("record") Order record, @Param("example") OrderExample example);
+    void deleteById(@Param(value = "id") int id);
 }

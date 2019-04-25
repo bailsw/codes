@@ -1,4 +1,4 @@
-package com.qdu.bookstore.book.service.impl;/**
+package com.qdu.bookstore.utils;/**
 *                                                                      : ,       
 *                                  +7?==?O$~                           :7?,, :~=,
 *                                +Z~       +Z~,                        :I+IIO+++ 
@@ -27,70 +27,15 @@ package com.qdu.bookstore.book.service.impl;/**
 *                     哪错了？             错哪了？              我是谁？
 */
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.qdu.bookstore.mappers.BookMapper;
-import com.qdu.bookstore.book.pojo.Book;
-import com.qdu.bookstore.book.service.BookService;
-import com.qdu.bookstore.utils.ResultVOUtil;
-import com.qdu.bookstore.vo.ResultVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.qdu.bookstore.buyer.pojo.Buyer;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 
 /** @Author ShaneLau
- * Created by Shane Lau on 2019/4/17.
+ * Created by Shane Lau on 2019/4/25.
  */
-@Service
-public class BookServiceImpl implements BookService {
-    @Autowired
-    private BookMapper bookMapper;
-
-    @Override
-    public ResultVO getBookById(String id) {
-        Book book=bookMapper.getBookById(id);
-        if (book!=null){
-            return ResultVOUtil.success(book);
-        }
-        return ResultVOUtil.error("fail");
-    }
-
-    @Override
-    public PageInfo<Book> search(String key, String type, int pagenum) {
-        PageHelper.startPage(20,pagenum);
-        ArrayList books=bookMapper.search(key,type);
-        return new PageInfo<Book>(books);
-    }
-
-    @Override
-    public ResultVO addBook(Book book) {
-        try {
-            bookMapper.addBook(book);
-            return ResultVOUtil.success(null);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResultVOUtil.error("fail");
-        }
-    }
-
-    @Override
-    public ArrayList<Book> getAllBooks(String type) {
-        if (type==null){
-            type="";
-        }
-        return bookMapper.getAllBooks(type);
-    }
-
-    @Override
-    public ResultVO deleteById(int id) {
-        try{
-            bookMapper.deleteById(id);
-            return ResultVOUtil.success(null);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResultVOUtil.error(null);
-        }
-
+public class LoginUtils {
+    public static Buyer getSessionBuyer(HttpServletRequest request){
+        return (Buyer) request.getSession().getAttribute("loggeduser");
     }
 }

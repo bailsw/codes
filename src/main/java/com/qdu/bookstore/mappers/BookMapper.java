@@ -18,4 +18,8 @@ public interface BookMapper {
     ArrayList<Book> getAllBooks(@Param(value = "type") String type);
 
     ArrayList search(@Param(value = "key") String key, @Param(value = "type") String type);
+
+    void addBook(Book book);
+
+    void deleteById(@Param(value = "id") int id);
 }

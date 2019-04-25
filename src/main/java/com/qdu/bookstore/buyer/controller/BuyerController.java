@@ -36,6 +36,7 @@ import com.qdu.bookstore.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -117,6 +118,13 @@ public class BuyerController {
             return ResultVOUtil.success("success");
         }
         return ResultVOUtil.error("fail");
+    }
+
+    @RequestMapping("getloggeduser")
+    @ResponseBody
+    public ResultVO getLoggedUser(HttpServletRequest request){
+        Buyer buyer= (Buyer) request.getSession().getAttribute("loggeduser");
+        return ResultVOUtil.success(buyer);
     }
 }
 

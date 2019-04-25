@@ -15,6 +15,7 @@ spring:
   mvc:
     view:
       suffix: .jsp
+    static-path-pattern: /static/**
 pagehelper:
   helper-dialect: mysql #不同的数据库分页语句可能不一样,
   params: count=countsql

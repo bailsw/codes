@@ -32,11 +32,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.qdu.bookstore.book.pojo.Book;
 import com.qdu.bookstore.book.service.BookService;
+import com.qdu.bookstore.utils.ResultVOUtil;
+import com.qdu.bookstore.utils.StringUtil;
+import com.qdu.bookstore.utils.UploadUtil;
 import com.qdu.bookstore.vo.ResultVO;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
@@ -72,9 +76,48 @@ public class BookController {
             @RequestParam(value = "type", defaultValue = "") String type,
             @RequestParam(value = "pagenum", defaultValue = "1") int pagenum) {
         System.out.println(111);
-        return bookService.search(key,type,pagenum);
+        return bookService.search(key, type, pagenum);
 
     }
 
+    @RequestMapping("addbook")
+    public ResultVO addBook(@RequestParam(value = "book_name")String book_name,
+                            @RequestParam(value = "book_genre")int book_genre,
+                            @RequestParam(value = "book_typeid")int book_typeid,
+                            @RequestParam(value = "book_price")int book_price,
+                            @RequestParam(value = "book_pic") MultipartFile book_pic,
+                            @RequestParam(value = "book_info")String book_info,
+                            @RequestParam(value = "book_ISBN") String book_ISBN,
+                            @RequestParam(value = "book_author")String book_author,
+                            @RequestParam(value = "book_publishingHouse")String book_publishingHouse,
+                            @RequestParam(value = "book_stock")int book_stock){
+        String pic=null;
+        try{
+           pic = UploadUtil.uploadFile(book_pic);
+        }catch (Exception e){
+            return ResultVOUtil.error("fail");
+        }
+
+        if (StringUtil.isEmpty(pic)){
+            return ResultVOUtil.error("fail");
+        }
+        Book book=new Book();
+        book.setBook_author(book_author);
+        book.setBook_info(book_info);
+        book.setBook_ISBN(book_ISBN);
+        book.setBook_pic(pic);
+        book.setBook_price(book_price);
+        book.setBook_stock(book_stock);
+        book.setBook_publishingHouse(book_publishingHouse);
+        book.setBook_typeid(book_typeid);
+        book.setGenre(book_genre);
+        book.setBook_name(book_name);
+       return bookService.addBook(book);
+    }
+
+    @RequestMapping("deletebookbyid")
+    public ResultVO deleteBookById(@RequestParam(value = "id") int id){
+       return bookService.deleteById(id);
+    }
 
 }

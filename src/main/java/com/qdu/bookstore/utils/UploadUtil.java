@@ -1,4 +1,4 @@
-package com.qdu.bookstore.book.service.impl;/**
+package com.qdu.bookstore.utils;/**
 *                                                                      : ,       
 *                                  +7?==?O$~                           :7?,, :~=,
 *                                +Z~       +Z~,                        :I+IIO+++ 
@@ -27,70 +27,37 @@ package com.qdu.bookstore.book.service.impl;/**
 *                     哪错了？             错哪了？              我是谁？
 */
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.qdu.bookstore.mappers.BookMapper;
-import com.qdu.bookstore.book.pojo.Book;
-import com.qdu.bookstore.book.service.BookService;
-import com.qdu.bookstore.utils.ResultVOUtil;
-import com.qdu.bookstore.vo.ResultVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
+import java.util.UUID;
 
 /** @Author ShaneLau
- * Created by Shane Lau on 2019/4/17.
+ * Created by Shane Lau on 2019/4/25.
  */
-@Service
-public class BookServiceImpl implements BookService {
-    @Autowired
-    private BookMapper bookMapper;
+public class UploadUtil {
+    private static String TMPDIR = "D:\\2019Biyesheji\\codes\\src\\main\\resources\\static\\";
 
-    @Override
-    public ResultVO getBookById(String id) {
-        Book book=bookMapper.getBookById(id);
-        if (book!=null){
-            return ResultVOUtil.success(book);
-        }
-        return ResultVOUtil.error("fail");
-    }
-
-    @Override
-    public PageInfo<Book> search(String key, String type, int pagenum) {
-        PageHelper.startPage(20,pagenum);
-        ArrayList books=bookMapper.search(key,type);
-        return new PageInfo<Book>(books);
-    }
-
-    @Override
-    public ResultVO addBook(Book book) {
+    public static String uploadFile(MultipartFile file) {
+        String fileName = null;
         try {
-            bookMapper.addBook(book);
-            return ResultVOUtil.success(null);
-        }catch (Exception e){
+            if (file.isEmpty()) {
+                return null;
+            }
+            UUID uuid = UUID.randomUUID();
+            fileName = uuid.toString() + new Random().nextInt(10000);
+            String path = TMPDIR + fileName;
+            File dest = new File(path);
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
+            file.transferTo(dest);
+            return fileName;
+        } catch (IOException e) {
             e.printStackTrace();
-            return ResultVOUtil.error("fail");
+            return null;
         }
-    }
-
-    @Override
-    public ArrayList<Book> getAllBooks(String type) {
-        if (type==null){
-            type="";
-        }
-        return bookMapper.getAllBooks(type);
-    }
-
-    @Override
-    public ResultVO deleteById(int id) {
-        try{
-            bookMapper.deleteById(id);
-            return ResultVOUtil.success(null);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResultVOUtil.error(null);
-        }
-
     }
 }

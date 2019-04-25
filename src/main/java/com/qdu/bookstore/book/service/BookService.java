@@ -16,4 +16,8 @@ public interface BookService{
     ArrayList<Book> getAllBooks(String type);
 
     PageInfo<Book> search(String key, String type, int pagenum);
+
+    ResultVO addBook(Book book);
+
+    ResultVO deleteById(int id);
 }
