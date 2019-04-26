@@ -46,4 +46,6 @@ public interface OrderService {
     ResultVO addOrder(HttpServletRequest request, String address, int amount, int book_id);
 
     ResultVO deleteOrderById(int id);
+
+    ResultVO changeOrderStatus(int order_id,int status);
 }

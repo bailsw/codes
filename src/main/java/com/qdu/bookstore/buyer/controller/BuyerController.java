@@ -124,6 +124,9 @@ public class BuyerController {
     @ResponseBody
     public ResultVO getLoggedUser(HttpServletRequest request){
         Buyer buyer= (Buyer) request.getSession().getAttribute("loggeduser");
+        if(buyer==null){
+            return null;
+        }
         return ResultVOUtil.success(buyer);
     }
 }

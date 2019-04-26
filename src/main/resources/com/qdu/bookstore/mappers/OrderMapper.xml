@@ -34,4 +34,7 @@
   <delete id="deleteById">
     delete from `order` where  order_id=#{id}
   </delete>
+    <update id="changeOrderStatus">
+        update `order` set order_status=#{status} where order_id=#{order_id}
+    </update>
 </mapper>

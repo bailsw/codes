@@ -48,8 +48,17 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
+
     @Autowired
     private OrderMapper orderMapper;
+    @Override
+    public ResultVO changeOrderStatus(int order_id,int status) {
+        int i=orderMapper.changeOrderStatus(order_id,status);
+        if (i!=0){
+            return ResultVOUtil.success(null);
+        }
+        return ResultVOUtil.error(null);
+    }
 
     @Override
     public List<Order> getAllOrdersByUserid(Integer id, Integer status) {
@@ -87,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrderById(Integer orderid, Buyer loggedUser) {
-        Order order = orderMapper.getOrderById(orderid, loggedUser.getBuyer_Id());
+        Order order = orderMapper.getOrderById(orderid);
         if (order != null) {
             return order;
         }

@@ -92,4 +92,8 @@ public class OrderController {
     public ResultVO deleteOrderById(int id){
         return orderService.deleteOrderById(id);
     }
+    @RequestMapping("changeorderstatus")
+    public ResultVO changeOrderStatus(int status){
+        return orderService.changeOrderStatus(status);
+    }
 }

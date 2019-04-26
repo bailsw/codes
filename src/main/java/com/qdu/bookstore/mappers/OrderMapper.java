@@ -18,4 +18,6 @@ public interface OrderMapper {
     ArrayList<Order> getOrdersByUser(@Param(value = "buyer_id") Integer id, @Param(value = "status") Integer status);
 
     void deleteById(@Param(value = "id") int id);
+
+    int changeOrderStatus(@Param(value = "order_id") int order_id,@Param(value = "status") int status);
 }
