@@ -33,6 +33,7 @@ import com.qdu.bookstore.utils.MD5Util;
 import com.qdu.bookstore.utils.ResultVOUtil;
 import com.qdu.bookstore.utils.StringUtil;
 import com.qdu.bookstore.vo.ResultVO;
+import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -128,6 +129,12 @@ public class BuyerController {
             return null;
         }
         return ResultVOUtil.success(buyer);
+    }
+    @RequestMapping("logout")
+    public ResultVO logout(HttpServletRequest request){
+        request.getSession().removeAttribute("token");
+        request.getSession().removeAttribute("loggeduser");
+        return ResultVOUtil.success(null);
     }
 }
 
