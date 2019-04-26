@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdu.bookstore.mappers.BookTypeMapper">
+    <insert id="addBookType" parameterType="com.qdu.bookstore.booktype.pojo.BookType"  >
+        insert into booktype (booktype_name) values (#{booktype_name});
+    </insert>
+    <select id="getAllBookType">
+        select * from booktype
+    </select>
+    <update id="updateBookType" parameterType="com.qdu.bookstore.booktype.pojo.BookType">
+        update booktype set booktype_name=#{booktype_name} where booktype_id=#{booktype_id}
+    </update>
+    <delete id="deleteBookType">
+        delete from booktype where booktype_id=#{booktype_id}
+    </delete>
+</mapper>
