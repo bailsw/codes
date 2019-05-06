@@ -47,7 +47,8 @@ public class UploadUtil {
                 return null;
             }
             UUID uuid = UUID.randomUUID();
-            fileName = uuid.toString() + new Random().nextInt(10000);
+            fileName = uuid.toString() + new Random().nextInt(10000)+
+                    file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'),file.getOriginalFilename().length());
             String path = TMPDIR + fileName;
             File dest = new File(path);
             if (!dest.getParentFile().exists()) {

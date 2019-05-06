@@ -5,7 +5,7 @@
 <mapper namespace="com.qdu.bookstore.mappers.BuyerMapper">
     <insert id="addBuyer" parameterType="com.qdu.bookstore.buyer.pojo.Buyer">
         INSERT into buyer(buyer_Username, buyer_password, buyer_salt, buyer_phone, buyer_email, buyer_registerTime, buyer_passwordQuestion, buyer_passwordAnswer)
-        VALUES (#{buyer_Username},#{buyer_Password},#{buyer_Salt},#{buyer_Phone},#{buyer_Email},#{buyer_Registertime},#{buyer_passwordquestion},{buyer_Passwordanswer})
+        VALUES (#{buyer_Username},#{buyer_Password},#{buyer_Salt},#{buyer_Phone},#{buyer_Email},#{buyer_Registertime},#{buyer_Passwordquestion},#{buyer_Passwordanswer})
     </insert>
     <select id="selectBuyerByUsername" resultType="com.qdu.bookstore.buyer.pojo.Buyer">
         SELECT * from buyer WHERE buyer_Username=#{buyer_Username}
@@ -14,8 +14,7 @@
         SELECT * from buyer WHERE buyer_Username=#{buyer_Username} and buyer_password=#{buyer_Password}
     </select>
     <update id="updateBuyer" parameterType="com.qdu.bookstore.buyer.pojo.Buyer">
-        UPDATE buyer SET buyer_password=#{buyer_Password},buyer_phone=#{buyer_Phone},
-        buyer_email=#{buyer_Email},buyer_passwordQuestion=#{buyer_Passwordquestion},
-        buyer_passwordAnswer=#{buyer_Passwordanswer} where buyer_id=#{buyer_Id}
+        UPDATE buyer SET buyer_phone=#{buyer_Phone},
+        buyer_email=#{buyer_Email} where buyer_id=#{buyer_Id}
     </update>
 </mapper>

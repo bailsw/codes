@@ -31,10 +31,13 @@ import com.qdu.bookstore.buyer.pojo.Buyer;
 import com.qdu.bookstore.buyer.service.BuyerService;
 import com.qdu.bookstore.mappers.BuyerMapper;
 import com.qdu.bookstore.utils.MD5Util;
+import com.qdu.bookstore.utils.ResultVOUtil;
 import com.qdu.bookstore.utils.StaticVariables;
+import com.qdu.bookstore.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /** @Author ShaneLau
@@ -64,14 +67,27 @@ public class BuyerServiceImpl implements BuyerService {
     }
 
     @Override
+    public ResultVO changeBuyerInfo(Buyer sessionBuyer, HttpServletRequest request) {
+        try {
+            buyerMapper.updateBuyer(sessionBuyer);
+            request.getSession().setAttribute("loggeduser",sessionBuyer);
+        }catch (Exception e){
+            return ResultVOUtil.error("");
+        }
+        return ResultVOUtil.success("");
+    }
+
+    @Override
     public void addUser(Buyer buyer) {
         buyer.setBuyer_Registertime(new Date());
+        buyerMapper.addBuyer(buyer);
     }
 
 
     @Override
-    public int changeBuyerPassword(String password, Buyer forgetpassworduser) {
-        return 0;
+    public void changeBuyerPassword(String password, Buyer forgetpassworduser) {
+        forgetpassworduser.setBuyer_Password(MD5Util.MD5Encode(password, "utf-8"));
+        buyerMapper.updateBuyer(forgetpassworduser);
     }
 
     @Override

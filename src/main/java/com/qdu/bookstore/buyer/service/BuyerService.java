@@ -1,6 +1,9 @@
 package com.qdu.bookstore.buyer.service;
 
 import com.qdu.bookstore.buyer.pojo.Buyer;
+import com.qdu.bookstore.vo.ResultVO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author ShaneLau
@@ -15,5 +18,7 @@ public interface BuyerService {
 
     Buyer getUserByUsername(String buyer_username);
 
-    int changeBuyerPassword(String password, Buyer forgetpassworduser);
+    void changeBuyerPassword(String password, Buyer forgetpassworduser);
+
+    ResultVO changeBuyerInfo(Buyer sessionBuyer, HttpServletRequest request);
 }

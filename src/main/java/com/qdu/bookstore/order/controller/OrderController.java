@@ -93,7 +93,7 @@ public class OrderController {
         return orderService.deleteOrderById(id);
     }
     @RequestMapping("changeorderstatus")
-    public ResultVO changeOrderStatus(int status){
-        return orderService.changeOrderStatus(status);
+    public ResultVO changeOrderStatus(int order_id,int status){
+        return orderService.changeOrderStatus(order_id,status);
     }
 }

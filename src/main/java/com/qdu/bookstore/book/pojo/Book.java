@@ -18,7 +18,7 @@ public class Book {
   private long book_stock;
   private long book_soldcount;
   private int book_typeid;
-  private int genre;
+  private int book_genre;
 
 
 

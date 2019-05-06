@@ -110,7 +110,7 @@ public class BookController {
         book.setBook_stock(book_stock);
         book.setBook_publishingHouse(book_publishingHouse);
         book.setBook_typeid(book_typeid);
-        book.setGenre(book_genre);
+        book.setBook_genre(book_genre);
         book.setBook_name(book_name);
        return bookService.addBook(book);
     }

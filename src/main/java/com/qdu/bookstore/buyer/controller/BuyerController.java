@@ -29,6 +29,7 @@ package com.qdu.bookstore.buyer.controller;/**
 
 import com.qdu.bookstore.buyer.pojo.Buyer;
 import com.qdu.bookstore.buyer.service.BuyerService;
+import com.qdu.bookstore.utils.LoginUtils;
 import com.qdu.bookstore.utils.MD5Util;
 import com.qdu.bookstore.utils.ResultVOUtil;
 import com.qdu.bookstore.utils.StringUtil;
@@ -37,10 +38,7 @@ import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +49,7 @@ import java.util.UUID;
 /**
  * Created by Shane Lau on 2019/3/13.
  */
-@Controller
+@RestController
 @RequestMapping("/buyer")
 public class BuyerController {
     @Autowired
@@ -76,16 +74,18 @@ public class BuyerController {
         if (StringUtil.isEqualsIgnoreCase(buyer.getBuyer_Password(), repassword)) {
             // 代表一致
             try {
-                buyer.setBuyer_Password(MD5Util.MD5Encode(buyer.getBuyer_Password(), "MD5"));//将原始目的密码转换成md5校验值,然后重新设置给对象
+                buyer.setBuyer_Password(MD5Util.MD5Encode(buyer.getBuyer_Password(), "utf-8"));//将原始目的密码转换成md5校验值,然后重新设置给对象
                 buyerService.addUser(buyer);
                 return ResultVOUtil.success("success");
             } catch (Exception e) {
+                e.printStackTrace();
                 return ResultVOUtil.error("fail");
             }
 
         }
         return ResultVOUtil.error("fail");
     }
+
 
     //登陆
     @RequestMapping("login")
@@ -107,9 +107,15 @@ public class BuyerController {
             }
         }
         ;
-        return ResultVOUtil.error(1, "登录失败");
+        return ResultVOUtil.error("登录失败");
     }
-
+    @RequestMapping("changebuyerinfo")
+    public ResultVO changeBuyerInfo(HttpServletRequest request,String buyer_Phone,String buyer_Email){
+        Buyer sessionBuyer = LoginUtils.getSessionBuyer(request);
+        sessionBuyer.setBuyer_Email(buyer_Email);
+        sessionBuyer.setBuyer_Phone(buyer_Phone);
+        return buyerService.changeBuyerInfo(sessionBuyer,request);
+    }
     @RequestMapping("changepassword")
     @ResponseBody
     public ResultVO changeaPassword(String password, String repassword, HttpServletRequest request) {
