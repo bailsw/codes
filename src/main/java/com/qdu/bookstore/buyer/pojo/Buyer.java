@@ -25,6 +25,7 @@ public class Buyer implements Serializable{
   private String buyer_Passwordquestion;
   @JsonIgnore
   private String buyer_Passwordanswer;
+  private int buyer_type;
 
 
 }

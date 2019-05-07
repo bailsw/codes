@@ -95,27 +95,29 @@ public class BuyerController {
         System.out.println(request.getSession().getId());
         Buyer buyer1 = buyerService.login(user_Username, user_Password);
         if (buyer1 != null) {
-            if (buyer1 != null) {
-                String string = UUID.randomUUID().toString();
-                request.getSession().setAttribute("loggeduser", buyer1);
-                request.getSession().setAttribute("token", string);
-                Cookie cookie = new Cookie("token", string);
-                cookie.setPath("/");
-                cookie.setHttpOnly(false);
-                response.addCookie(cookie);
-                return ResultVOUtil.success(buyer1);
-            }
+
+            String string = UUID.randomUUID().toString();
+            request.getSession().setAttribute("loggeduser", buyer1);
+            request.getSession().setAttribute("token", string);
+            Cookie cookie = new Cookie("token", string);
+            cookie.setPath("/");
+            cookie.setHttpOnly(false);
+            response.addCookie(cookie);
+            return ResultVOUtil.success(buyer1);
+
         }
         ;
         return ResultVOUtil.error("登录失败");
     }
+
     @RequestMapping("changebuyerinfo")
-    public ResultVO changeBuyerInfo(HttpServletRequest request,String buyer_Phone,String buyer_Email){
+    public ResultVO changeBuyerInfo(HttpServletRequest request, String buyer_Phone, String buyer_Email) {
         Buyer sessionBuyer = LoginUtils.getSessionBuyer(request);
         sessionBuyer.setBuyer_Email(buyer_Email);
         sessionBuyer.setBuyer_Phone(buyer_Phone);
-        return buyerService.changeBuyerInfo(sessionBuyer,request);
+        return buyerService.changeBuyerInfo(sessionBuyer, request);
     }
+
     @RequestMapping("changepassword")
     @ResponseBody
     public ResultVO changeaPassword(String password, String repassword, HttpServletRequest request) {
@@ -129,15 +131,16 @@ public class BuyerController {
 
     @RequestMapping("getloggeduser")
     @ResponseBody
-    public ResultVO getLoggedUser(HttpServletRequest request){
-        Buyer buyer= (Buyer) request.getSession().getAttribute("loggeduser");
-        if(buyer==null){
+    public ResultVO getLoggedUser(HttpServletRequest request) {
+        Buyer buyer = (Buyer) request.getSession().getAttribute("loggeduser");
+        if (buyer == null) {
             return null;
         }
         return ResultVOUtil.success(buyer);
     }
+
     @RequestMapping("logout")
-    public ResultVO logout(HttpServletRequest request){
+    public ResultVO logout(HttpServletRequest request) {
         request.getSession().removeAttribute("token");
         request.getSession().removeAttribute("loggeduser");
         return ResultVOUtil.success(null);

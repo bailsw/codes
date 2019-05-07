@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qdu.bookstore.mappers.BuyerMapper">
     <insert id="addBuyer" parameterType="com.qdu.bookstore.buyer.pojo.Buyer">
-        INSERT into buyer(buyer_Username, buyer_password, buyer_salt, buyer_phone, buyer_email, buyer_registerTime, buyer_passwordQuestion, buyer_passwordAnswer)
-        VALUES (#{buyer_Username},#{buyer_Password},#{buyer_Salt},#{buyer_Phone},#{buyer_Email},#{buyer_Registertime},#{buyer_Passwordquestion},#{buyer_Passwordanswer})
+        INSERT into buyer(buyer_Username, buyer_password, buyer_salt, buyer_phone, buyer_email, buyer_registerTime, buyer_passwordQuestion, buyer_passwordAnswer,buyer_type)
+        VALUES (#{buyer_Username},#{buyer_Password},#{buyer_Salt},#{buyer_Phone},#{buyer_Email},#{buyer_Registertime},#{buyer_Passwordquestion},#{buyer_Passwordanswer},1)
     </insert>
     <select id="selectBuyerByUsername" resultType="com.qdu.bookstore.buyer.pojo.Buyer">
         SELECT * from buyer WHERE buyer_Username=#{buyer_Username}

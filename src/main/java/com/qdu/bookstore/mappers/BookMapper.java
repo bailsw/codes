@@ -15,11 +15,15 @@ import java.util.ArrayList;
 public interface BookMapper {
     Book getBookById(@Param(value = "id") String id);
 
-    ArrayList<Book> getAllBooks(@Param(value = "type") String type);
+    ArrayList<Book> getAllBooks(@Param(value = "type") String type,
+                                @Param(value = "genre") String genre);
 
-    ArrayList search(@Param(value = "key") String key, @Param(value = "type") String type);
+    ArrayList search(@Param(value = "key") String key, @Param(value = "type") String type,
+                     @Param(value = "genre") String genre);
 
     void addBook(Book book);
 
     void deleteById(@Param(value = "id") int id);
+
+    void modifyBook(Book book);
 }

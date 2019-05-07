@@ -51,15 +51,17 @@ public class BookServiceImpl implements BookService {
     public ResultVO getBookById(String id) {
         Book book=bookMapper.getBookById(id);
         if (book!=null){
+           // System.out.println(book.toString());
             return ResultVOUtil.success(book);
         }
         return ResultVOUtil.error("fail");
     }
 
     @Override
-    public PageInfo<Book> search(String key, String type, int pagenum) {
+    public PageInfo<Book> search(String key, String type, int pagenum, String genre) {
         PageHelper.startPage(20,pagenum);
-        ArrayList books=bookMapper.search(key,type);
+        ArrayList books=bookMapper.search(key,type,genre);
+
         return new PageInfo<Book>(books);
     }
 
@@ -75,11 +77,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public ArrayList<Book> getAllBooks(String type) {
-        if (type==null){
-            type="";
-        }
-        return bookMapper.getAllBooks(type);
+    public ArrayList<Book> getAllBooks(String type, String genre) {
+
+        return bookMapper.getAllBooks(type,genre);
     }
 
     @Override
@@ -92,5 +92,16 @@ public class BookServiceImpl implements BookService {
             return ResultVOUtil.error(null);
         }
 
+    }
+
+    @Override
+    public ResultVO modifyBook(Book book) {
+        try{
+            bookMapper.modifyBook(book);
+            return ResultVOUtil.success(null);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultVOUtil.error(null);
+        }
     }
 }

@@ -63,10 +63,12 @@ public class BookController {
 
     @RequestMapping("getbookbytypeandpage")
     public PageInfo<Book> getBookByPage(@RequestParam(value = "pagenum", defaultValue = "1", required = false) int pagenum,
-                                        @RequestParam(value = "type", required = false) String type) {
+                                        @RequestParam(value = "type", required = false,defaultValue = "") String type,
+                                        @RequestParam(value = "genre",required = false,defaultValue = "")String genre) {
         //System.out.println(111);
         PageHelper.startPage(pagenum, DEFAULT_PAGE_SIZE);
-        ArrayList<Book> books = bookService.getAllBooks(type);
+        System.out.println(genre);
+        ArrayList<Book> books = bookService.getAllBooks(type,genre);
         return new PageInfo<Book>(books);
     }
 
@@ -74,9 +76,10 @@ public class BookController {
     public PageInfo<Book> searchBookByKeyTypePage(
             @RequestParam(value = "key", defaultValue = "") String key,
             @RequestParam(value = "type", defaultValue = "") String type,
-            @RequestParam(value = "pagenum", defaultValue = "1") int pagenum) {
-        System.out.println(111);
-        return bookService.search(key, type, pagenum);
+            @RequestParam(value = "pagenum", defaultValue = "1") int pagenum,
+            @RequestParam(value = "genre",required = false)String genre) {
+        //System.out.println(111);
+        return bookService.search(key, type, pagenum,genre);
 
     }
 
@@ -84,7 +87,7 @@ public class BookController {
     public ResultVO addBook(@RequestParam(value = "book_name")String book_name,
                             @RequestParam(value = "book_genre")int book_genre,
                             @RequestParam(value = "book_typeid")int book_typeid,
-                            @RequestParam(value = "book_price")int book_price,
+                            @RequestParam(value = "book_price")String book_price,
                             @RequestParam(value = "book_pic") MultipartFile book_pic,
                             @RequestParam(value = "book_info")String book_info,
                             @RequestParam(value = "book_ISBN") String book_ISBN,
@@ -106,7 +109,7 @@ public class BookController {
         book.setBook_info(book_info);
         book.setBook_ISBN(book_ISBN);
         book.setBook_pic(pic);
-        book.setBook_price(book_price);
+        book.setBook_price(Integer.valueOf(book_price));
         book.setBook_stock(book_stock);
         book.setBook_publishingHouse(book_publishingHouse);
         book.setBook_typeid(book_typeid);
@@ -120,4 +123,30 @@ public class BookController {
        return bookService.deleteById(id);
     }
 
+    @RequestMapping("modifybook")
+    public ResultVO modifyBook(@RequestParam(value = "book_name")String book_name,
+                               @RequestParam(value = "book_id")String book_id,
+                            @RequestParam(value = "book_genre")String book_genre,
+                            @RequestParam(value = "book_typeid")String book_typeid,
+                            @RequestParam(value = "book_price")String book_price,
+                            @RequestParam(value = "book_info")String book_info,
+                            @RequestParam(value = "book_ISBN") String book_ISBN,
+                            @RequestParam(value = "book_author")String book_author,
+                            @RequestParam(value = "book_publishingHouse")String book_publishingHouse,
+                            @RequestParam(value = "book_stock")String book_stock){
+        Book book=new Book();
+        book.setBook_id(Integer.valueOf(book_id));
+        book.setBook_author(book_author);
+        book.setBook_info(book_info);
+        book.setBook_ISBN(book_ISBN);
+        book.setBook_price(Integer.valueOf(book_price));
+        book.setBook_stock(Integer.valueOf(book_stock));
+        book.setBook_publishingHouse(book_publishingHouse);
+        System.out.println("typeid:"+book_typeid);
+        System.out.println("genre"+book_genre);
+        book.setBook_typeid(Integer.valueOf(book_typeid));
+        book.setBook_genre(Integer.valueOf(book_genre));
+        book.setBook_name(book_name);
+        return bookService.modifyBook(book);
+    }
 }
