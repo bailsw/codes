@@ -42,6 +42,7 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 /**
@@ -77,7 +78,7 @@ public class BookController {
             @RequestParam(value = "key", defaultValue = "") String key,
             @RequestParam(value = "type", defaultValue = "") String type,
             @RequestParam(value = "pagenum", defaultValue = "1") int pagenum,
-            @RequestParam(value = "genre",required = false)String genre) {
+            @RequestParam(value = "genre",required = false,defaultValue = "")String genre) {
         //System.out.println(111);
         return bookService.search(key, type, pagenum,genre);
 
@@ -142,8 +143,6 @@ public class BookController {
         book.setBook_price(Integer.valueOf(book_price));
         book.setBook_stock(Integer.valueOf(book_stock));
         book.setBook_publishingHouse(book_publishingHouse);
-        System.out.println("typeid:"+book_typeid);
-        System.out.println("genre"+book_genre);
         book.setBook_typeid(Integer.valueOf(book_typeid));
         book.setBook_genre(Integer.valueOf(book_genre));
         book.setBook_name(book_name);

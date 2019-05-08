@@ -28,13 +28,13 @@
         book_soldcount,book_stock  from book b left join booktype bt on b.book_typeid=bt.booktype_id
         <where>
             <if test="key!=''">
-                b.book_name like CONCAT('%',#{key},'%')
+                book_name like CONCAT('%',#{key},'%')
             </if>
             <if test="type!=''">
-               and b.booktype_name = #{type}
+               and booktype_name = #{type}
             </if>
             <if test="genre!=''">
-                and b.book_genre=#{genre}
+                and book_genre=#{genre}
             </if>
         </where>
     </select>

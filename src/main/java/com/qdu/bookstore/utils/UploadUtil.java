@@ -39,7 +39,6 @@ import java.util.UUID;
  */
 public class UploadUtil {
     private static String TMPDIR = "D:\\2019Biyesheji\\codes\\src\\main\\resources\\static\\";
-
     public static String uploadFile(MultipartFile file) {
         String fileName = null;
         try {

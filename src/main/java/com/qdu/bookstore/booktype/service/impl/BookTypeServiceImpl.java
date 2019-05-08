@@ -53,7 +53,6 @@ public class BookTypeServiceImpl implements BookTypeService {
         }catch (Exception e){
             return ResultVOUtil.error("");
         }
-
     }
 
     @Override

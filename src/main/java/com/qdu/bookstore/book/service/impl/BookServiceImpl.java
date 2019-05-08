@@ -37,6 +37,8 @@ import com.qdu.bookstore.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 /** @Author ShaneLau
@@ -60,8 +62,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public PageInfo<Book> search(String key, String type, int pagenum, String genre) {
         PageHelper.startPage(20,pagenum);
+            key= URLDecoder.decode(key);
         ArrayList books=bookMapper.search(key,type,genre);
-
         return new PageInfo<Book>(books);
     }
 

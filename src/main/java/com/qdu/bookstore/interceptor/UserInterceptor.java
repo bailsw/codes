@@ -47,29 +47,27 @@ public class UserInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         response.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
+        //获取session的token，不存在则直接拒绝访问。
         String sessionToken = (String) session.getAttribute("token");
-        System.out.println(sessionToken);
         if (sessionToken == null){
             return false;
         }
-        System.out.println("sessionToken is "+sessionToken);
         String requestToken = null;
+        //获取并遍历前端的cookie
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
+            //如果带有token则取出，在下一步进行匹配验证
             if (cookie.getName().equals("token")) {
                 requestToken = cookie.getValue();
-                System.out.println("requestToken is "+requestToken);
                 break;
             }
         }
-        if (requestToken != null) {
-            if (requestToken.equals(sessionToken)) {
+        //如果和session中的token匹配，允许访问 否则拒绝
+        if (requestToken != null&&requestToken.equals(sessionToken)) {
                 return true;
-            }
         } else {
             return false;
         }
-        return false;
     }
 
     @Override

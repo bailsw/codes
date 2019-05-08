@@ -81,7 +81,6 @@ public class BuyerController {
                 e.printStackTrace();
                 return ResultVOUtil.error("fail");
             }
-
         }
         return ResultVOUtil.error("fail");
     }
@@ -92,10 +91,10 @@ public class BuyerController {
     @ResponseBody
     public ResultVO login(@RequestParam(value = "buyer_Username") String user_Username,
                           @RequestParam(value = "buyer_Password") String user_Password, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(request.getSession().getId());
+        //从Mybatis中查询用户名密码是否正确
         Buyer buyer1 = buyerService.login(user_Username, user_Password);
+        //如果正确 就向前端返回带token的cookie并将token存入session
         if (buyer1 != null) {
-
             String string = UUID.randomUUID().toString();
             request.getSession().setAttribute("loggeduser", buyer1);
             request.getSession().setAttribute("token", string);
@@ -104,9 +103,7 @@ public class BuyerController {
             cookie.setHttpOnly(false);
             response.addCookie(cookie);
             return ResultVOUtil.success(buyer1);
-
         }
-        ;
         return ResultVOUtil.error("登录失败");
     }
 

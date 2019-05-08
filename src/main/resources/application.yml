@@ -26,6 +26,8 @@ server:
     session:
       cookie:
         http-only: false
+  tomcat:
+    uri-encoding: utf-8
 #mybatis:
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
