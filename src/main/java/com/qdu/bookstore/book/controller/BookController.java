@@ -68,7 +68,7 @@ public class BookController {
                                         @RequestParam(value = "genre",required = false,defaultValue = "")String genre) {
         //System.out.println(111);
         PageHelper.startPage(pagenum, DEFAULT_PAGE_SIZE);
-        System.out.println(genre);
+        //System.out.println(genre);
         ArrayList<Book> books = bookService.getAllBooks(type,genre);
         return new PageInfo<Book>(books);
     }

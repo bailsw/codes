@@ -16,20 +16,20 @@
 <select id="getOrdersByUser" resultMap="BaseResultMap">
   select * from `order`
   <where>
-    <if test="#{buyer_id}!=null">
+    <if test="buyer_id!=null">
       order_userid=#{buyer_id}
     </if>
-    <if test="#{status}!=null">
-      and order_status=#{status}
-    </if>
+    <!--<if test="#{status}!='-1'">-->
+      <!--and order_status=#{status}-->
+    <!--</if>-->
   </where>
 </select>
   <select id="getOrderById" resultMap="BaseResultMap">
     select * from `order` where  order_id=#{order_id};
   </select>
   <insert id="addOrder" parameterType="com.qdu.bookstore.order.pojo.Order">
-    insert into "order" (order_userid, order_item, order_price, order_status, order_createdate,order_address, order_item_amount)
-     values (#{orderUserId},#{orderItem},#{orderPrice},1,#{orderCreatedate},#{orderAddress},#{orderItemAmount});
+    insert into `order` (order_userid, order_item, order_price, order_status, order_createdate,order_address, order_item_amount)
+     values (#{orderUserid},#{orderItem},#{orderPrice},1,#{orderCreatedate},#{orderAddress},#{orderItemAmount});
   </insert>
   <delete id="deleteById">
     delete from `order` where  order_id=#{id}
