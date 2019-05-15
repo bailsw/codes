@@ -78,9 +78,10 @@ public class BookController {
             @RequestParam(value = "key", defaultValue = "") String key,
             @RequestParam(value = "type", defaultValue = "") String type,
             @RequestParam(value = "pagenum", defaultValue = "1") int pagenum,
+            @RequestParam(value = "pagesize",defaultValue = "10") int pagesize,
             @RequestParam(value = "genre",required = false,defaultValue = "")String genre) {
         //System.out.println(111);
-        return bookService.search(key, type, pagenum,genre);
+        return bookService.search(key, type, pagenum,pagesize,genre);
 
     }
 

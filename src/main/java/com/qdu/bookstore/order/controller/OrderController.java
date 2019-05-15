@@ -84,7 +84,7 @@ public class OrderController {
     }
     @RequestMapping("getallordersbystatus")
     public PageInfo<Order> getAllOrdersByStatus(Integer status,int pagenum){
-        PageHelper.startPage(pagenum,5);
+        PageHelper.startPage(pagenum,10);
         List<Order> allOrdersByUserid = orderService.getAllOrdersByUserid(null, status);
         return new PageInfo<>(allOrdersByUserid);
     }

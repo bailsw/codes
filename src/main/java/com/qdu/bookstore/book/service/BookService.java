@@ -15,7 +15,7 @@ public interface BookService{
 
     ArrayList<Book> getAllBooks(String type, String genre);
 
-    PageInfo<Book> search(String key, String type, int pagenum, String genre);
+    PageInfo<Book> search(String key, String type, int pagenum, int pagesize,String genre);
 
     ResultVO addBook(Book book);
 

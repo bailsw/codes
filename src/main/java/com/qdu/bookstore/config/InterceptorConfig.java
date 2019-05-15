@@ -42,6 +42,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
     private UserInterceptor userInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(userInterceptor).addPathPatterns("/**").excludePathPatterns("/buyer/**","/book/**","/booktype/**","/static/**");
+        registry.addInterceptor(userInterceptor).addPathPatterns("/**").excludePathPatterns("/buyer/**","/book/**","/booktype/**","/img/**");
     }
 }

@@ -60,8 +60,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public PageInfo<Book> search(String key, String type, int pagenum, String genre) {
-        PageHelper.startPage(20,pagenum);
+    public PageInfo<Book> search(String key, String type, int pagenum,int pagesize, String genre) {
+        PageHelper.startPage(pagenum,pagesize);
             key= URLDecoder.decode(key);
         ArrayList books=bookMapper.search(key,type,genre);
         return new PageInfo<Book>(books);
