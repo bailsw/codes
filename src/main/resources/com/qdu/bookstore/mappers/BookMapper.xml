@@ -42,14 +42,13 @@
         insert into book (book_genre, book_typeid, book_name, book_price, book_pic, book_info, book_ISBN,
          book_author, book_publishingHouse, book_browsedTime, book_stock, book_soldcount)
          values (#{book_genre},#{book_typeid},#{book_name},#{book_price},#{book_pic},#{book_info},#{book_ISBN},
-         #{book_author},#{book_publishingHouse},0,#{book_stock},0);
+         #{book_author},#{book_publishingHouse},0,0,0);
     </insert>
     <delete id="deleteById" >
         delete from book where book_id=#{id}
     </delete>
     <update id="modifyBook" parameterType="com.qdu.bookstore.book.pojo.Book">
         update book set book_genre=#{book_genre},book_typeid=#{book_typeid},book_name=#{book_name},
-        book_price=#{book_price},book_info=#{book_info},book_publishingHouse=#{book_publishingHouse},
-        book_stock=#{book_stock} where book_id=#{book_id}
+        book_price=#{book_price},book_info=#{book_info},book_ISBN=#{book_ISBN},book_publishingHouse=#{book_publishingHouse},book_author=#{book_author} where book_id=#{book_id}
     </update>
 </mapper>

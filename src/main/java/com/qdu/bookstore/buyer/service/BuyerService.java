@@ -5,10 +5,7 @@ import com.qdu.bookstore.vo.ResultVO;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @Author ShaneLau
- * Created by Shane Lau on 2019/4/1.
- */
+
 public interface BuyerService {
     void addUser(Buyer buyer);
 

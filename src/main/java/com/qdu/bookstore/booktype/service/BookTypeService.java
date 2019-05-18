@@ -6,10 +6,7 @@ import com.qdu.bookstore.vo.ResultVO;
 
 import java.util.List;
 
-/**
- * @Author ShaneLau
- * Created by Shane Lau on 2019/4/26.
- */
+
 public interface BookTypeService {
     ResultVO addBookType(BookType bookType);
 

@@ -1,31 +1,4 @@
-package com.qdu.bookstore.book.controller;/**
- * : ,
- * +7?==?O$~                           :7?,, :~=,
- * +Z~       +Z~,                        :I+IIO+++
- * ,7=,          7:,                       :?:~Z8=
- * :I,            7,                       +?~IZ,
- * ,I:   ?     ?    ?                  ,~+Z+ :~+
- * $,              I,             ,:~77~, ,I7=
- * :Z                ?:   :~~+?Z$7I+: ,,,~7+
- * $,                7Z7I+::         :?$+,
- * ,?+                           ,+7I=
- * ,7:                   ,:,=N?~,
- * :7$,                   IZI$?
- * ?$+: ,                    ++
- * ~$ ,                        ,:I~
- * ,                   7=                              :I$~
- * ,O+               =I7$7, , ,     ,                      ,77:,
- * ,I7,            =$?, ,,O~  ~+O$#4=                        :=7~
- * ~II$:+$= ,,,:++?I7?,     :I:OZ+, :~7I,,,                    ,:??7+ ,
- * +D77$$?+I?~,,,      ,,:+O$ ,        :+I=:,,               =8I~ ,,,Z+
- * =Z7=+++++==+7TMO~                  ~$+,            :?=,,,,,,,,:?,
- * :O?,      :, ?:, ,,,,,,,,,$:
- * ,+I:,    ,?+,, ,,,,,,,,,,7=
- * :I77~ :Z, ,,,,,,,,,,,,,,?=
- * ,,I= I,,,,,,,,,,,,,,,,,?+
- * :~,                 :=
- * 哪错了？             错哪了？              我是谁？
- */
+package com.qdu.bookstore.book.controller;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -45,15 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
-/**
- * @Author ShaneLau
- * Created by Shane Lau on 2019/4/12.
- */
+
 @RestController
 @RequestMapping("/book")
 @CrossOrigin
 public class BookController {
-    private final int DEFAULT_PAGE_SIZE = 20;
+    private final String DEFAULT_PAGE_SIZE = "10";
     @Autowired
     private BookService bookService;
 
@@ -65,9 +35,10 @@ public class BookController {
     @RequestMapping("getbookbytypeandpage")
     public PageInfo<Book> getBookByPage(@RequestParam(value = "pagenum", defaultValue = "1", required = false) int pagenum,
                                         @RequestParam(value = "type", required = false,defaultValue = "") String type,
-                                        @RequestParam(value = "genre",required = false,defaultValue = "")String genre) {
+                                        @RequestParam(value = "genre",required = false,defaultValue = "")String genre,
+                                        @RequestParam(value = "pagesize",defaultValue = DEFAULT_PAGE_SIZE)int pagesize) {
         //System.out.println(111);
-        PageHelper.startPage(pagenum, DEFAULT_PAGE_SIZE);
+        PageHelper.startPage(pagenum, pagesize);
         //System.out.println(genre);
         ArrayList<Book> books = bookService.getAllBooks(type,genre);
         return new PageInfo<Book>(books);
@@ -94,8 +65,7 @@ public class BookController {
                             @RequestParam(value = "book_info")String book_info,
                             @RequestParam(value = "book_ISBN") String book_ISBN,
                             @RequestParam(value = "book_author")String book_author,
-                            @RequestParam(value = "book_publishingHouse")String book_publishingHouse,
-                            @RequestParam(value = "book_stock")int book_stock){
+                            @RequestParam(value = "book_publishingHouse")String book_publishingHouse){
         String pic=null;
         try{
            pic = UploadUtil.uploadFile(book_pic);
@@ -112,7 +82,6 @@ public class BookController {
         book.setBook_ISBN(book_ISBN);
         book.setBook_pic(pic);
         book.setBook_price(Integer.valueOf(book_price));
-        book.setBook_stock(book_stock);
         book.setBook_publishingHouse(book_publishingHouse);
         book.setBook_typeid(book_typeid);
         book.setBook_genre(book_genre);
@@ -134,19 +103,18 @@ public class BookController {
                             @RequestParam(value = "book_info")String book_info,
                             @RequestParam(value = "book_ISBN") String book_ISBN,
                             @RequestParam(value = "book_author")String book_author,
-                            @RequestParam(value = "book_publishingHouse")String book_publishingHouse,
-                            @RequestParam(value = "book_stock")String book_stock){
+                            @RequestParam(value = "book_publishingHouse")String book_publishingHouse){
         Book book=new Book();
         book.setBook_id(Integer.valueOf(book_id));
         book.setBook_author(book_author);
         book.setBook_info(book_info);
         book.setBook_ISBN(book_ISBN);
         book.setBook_price(Integer.valueOf(book_price));
-        book.setBook_stock(Integer.valueOf(book_stock));
         book.setBook_publishingHouse(book_publishingHouse);
         book.setBook_typeid(Integer.valueOf(book_typeid));
         book.setBook_genre(Integer.valueOf(book_genre));
         book.setBook_name(book_name);
+        System.out.println(book_author);
         return bookService.modifyBook(book);
     }
 }
