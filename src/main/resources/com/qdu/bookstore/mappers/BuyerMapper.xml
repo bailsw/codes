@@ -15,6 +15,6 @@
     </select>
     <update id="updateBuyer" parameterType="com.qdu.bookstore.buyer.pojo.Buyer">
         UPDATE buyer SET buyer_phone=#{buyer_Phone},
-        buyer_email=#{buyer_Email} where buyer_id=#{buyer_Id}
+        buyer_email=#{buyer_Email},buyer_password=#{buyer_Password} where buyer_id=#{buyer_Id}
     </update>
 </mapper>

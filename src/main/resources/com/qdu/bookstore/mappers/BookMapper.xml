@@ -14,8 +14,9 @@
         book_price,book_pic,book_info,book_ISBN,book_author,book_publishingHouse,book_browsedTime,
         book_soldcount,book_stock from book b left join booktype bt on b.book_typeid=bt.booktype_id
         <where>
+            book_is_delete=0
             <if test="type!=''">
-                booktype_name=#{type}
+                and booktype_name=#{type}
             </if>
             <if test="genre!=''">
                 and book_genre=#{genre}
@@ -27,8 +28,9 @@
         book_price,book_pic,book_info,book_ISBN,book_author,book_publishingHouse,book_browsedTime,
         book_soldcount,book_stock  from book b left join booktype bt on b.book_typeid=bt.booktype_id
         <where>
+            book_is_delete=0
             <if test="key!=''">
-                book_name like CONCAT('%',#{key},'%')
+                and book_name like CONCAT('%',#{key},'%')
             </if>
             <if test="type!=''">
                and booktype_name = #{type}
@@ -45,7 +47,7 @@
          #{book_author},#{book_publishingHouse},0,0,0);
     </insert>
     <delete id="deleteById" >
-        delete from book where book_id=#{id}
+        update  book set  book_is_delete=1 where book_id=#{id}
     </delete>
     <update id="modifyBook" parameterType="com.qdu.bookstore.book.pojo.Book">
         update book set book_genre=#{book_genre},book_typeid=#{book_typeid},book_name=#{book_name},

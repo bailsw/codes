@@ -7,12 +7,12 @@
         insert into booktype (booktype_name) values (#{booktype_name});
     </insert>
     <select id="getAllBookType" resultType="com.qdu.bookstore.booktype.pojo.BookType">
-        select * from booktype
+        select * from booktype where booktype_is_delete=0
     </select>
     <update id="updateBookType" parameterType="com.qdu.bookstore.booktype.pojo.BookType">
         update booktype set booktype_name=#{booktype_name} where booktype_id=#{booktype_id}
     </update>
     <delete id="deleteBookType">
-        delete from booktype where booktype_id=#{booktype_id}
+        update booktype set booktype_is_delete=1 where booktype_id=#{booktype_id}
     </delete>
 </mapper>
